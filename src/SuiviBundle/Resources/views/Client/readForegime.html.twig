@@ -1,0 +1,78 @@
+{% extends '::base.html.twig' %}
+
+{% block contenu %}
+<div class="our-blog-details ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9 col-sm-12 col-xs-12">
+                <div class="blog-left-sidebar">
+                    <article class="articles-details">
+                        <div class="article-thumbnail">
+                            <img src="{{ asset('imagesPidev/' ~ regime.img) }}" alt="">
+                            <div class="blog-bottom-action">
+                                <div class="blog-publish">
+                                    <p><i class="zmdi zmdi-time"></i>{{ regime.date | date ('Y-M-d')}} </p>
+                                </div>
+                                <div class="blog-action-box">
+                                    {% if test == null %}
+                                    <ul class="product-action">
+                                        <li><a href="{{ path('client_like',{'id': regime.id }) }}"><i class="zmdi zmdi-favorite-outline"></i>{{ nblikes }}</a></li>
+                                    </ul>
+                                    {% else %}
+                                    <ul class="product-action">
+                                        <li><a href="{{ path('client_like',{'id': regime.id }) }}"><i class="zmdi zmdi-favorite"></i>{{ nblikes }}</a></li>
+                                    </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="article-desc">
+                            <div class="article-title">
+                            <h3>{{ regime.titre }}</h3>
+                            </div>
+                                <div class="article-text">
+                                {{ regime.description | raw  }}
+                                </div>
+                        </div>
+                    </article>
+                    <a href="{{ path('client_suiviRegime',{'id': regime.id}) }}" style="text-align: center;position:relative;left: 90%" class="button border-radius large button-white "><span>Suivre ce régime ></span></a>
+
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-xs-12">
+                <div class="single-team">
+                    <div class="team-img">
+                        <img src="{{ asset('images/about/team/1.png') }}" alt="">
+                    </div>
+                    <div class="team-hover">
+                        <div class="team-desc">
+                            <div class="team-desc-tablcell">
+                                <h5>{{ nutri.nom }} {{ nutri.prenom }}</h5>
+                                <h6>Nutritionniste</h6>
+                                <p> Lorem ipsum dolor sit amet, cons adipisicing elit, sed do eiusmo te incididunt ut labore. </p>
+                                <div class="member-follow">
+                                    <p>Follow on:</p>
+                                    <div class="member-follow-social">
+                                        <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                                        <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                                        <a href="#"><i class="zmdi zmdi-dribbble"></i></a>
+                                        <a href="#"><i class="zmdi zmdi-pinterest"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

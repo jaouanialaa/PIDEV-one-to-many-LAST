@@ -1,0 +1,839 @@
+{% extends 'base.html.twig' %}
+{% block css %}
+    <link href="{{ asset('admin/js/datatables/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/js/datatables/buttons.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/js/datatables/fixedHeader.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/js/datatables/responsive.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin/js/datatables/scroller.bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
+{% endblock %}
+{% block contenu %}
+    <div class="shop-page ptb-100 menuforms">
+    <div class="container">
+        <div class="row">
+            <a href="{{ path('client_abbondonnerRegime',{'id' : regime.id}) }}" style="text-align: left;position:relative;left:90%" class="button border-radius large button-white"><span>Abondonner ce régime</span></a>
+            <div class="col-md-8 col-md-offset-2">
+                <div class="section-title text-center">
+                    <h2>Votre outils pour le suivi de régime</h2>
+                    <p>Bienvenu dans votre espace de suivi de régime, ici on vous aide à achever votre
+                    regime dans les conditions les plus favorables ! N'hésitez pas à utiliser nos outils pour
+                    calculer </p>
+                </div>
+                <div class="error-content" style="text-align: center;position:relative;left: 0%;" >
+                    <h2 class="resultat" style="font-size: 40px;" id="resultat_calories">
+                        {{ date( lr.datefin|date ).diff( date("now") ).days }}
+                    </h2>
+                    <h4>Jours restants</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--shop sidebar start-->
+                <div class="tab-content ">
+                    <div id="grid" class="tab-pane active" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="single-feature text-center">
+                                    <div class="feature-img">
+                                        <img src="{{ asset('images/images.png') }}" alt="">
+                                    </div>
+                                    <div class="feature-desc">
+                                        <h3><a href="#">Mon poids idéal</a></h3>
+                                        <a class="poidsidealbtn" href="#">Calculer</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="single-feature text-center">
+                                    <div class="feature-img">
+                                        <img src="{{ asset('images/imagen-imc-calculadora-peso-ideal-0big.png') }}" alt="">
+                                    </div>
+                                    <div class="feature-desc">
+                                        <h3><a href="#">Mon IMC</a></h3>
+                                        <a class="imcbtn" href="#">Calculer</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="single-feature text-center">
+                                    <div class="feature-img">
+                                        <img src="{{ asset('images/vert-d-icône-de-montre-101545611.jpg') }}" alt="">
+                                    </div>
+                                    <div class="feature-desc">
+                                        <h3><a href="#">Compteur calories sport</a></h3>
+                                        <a class="caloriesbtn" href="#">Calculer</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-sm-6 col-xs-12">
+                                <div class="single-feature text-center">
+                                    <div class="feature-img">
+                                        <img src="{{ asset('images/icon-food-and-beverage.png') }}" alt="">
+                                    </div>
+                                    <div class="feature-desc">
+                                        <h3><a href="#">Tables de calories</a></h3>
+                                        <a class="tablecaloriesbtn" href="#">Voir</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+            <!--shop sidebar end-->
+    </div>
+</div>
+    <a href="" style="text-align: center;position:relative;left: 3%" class="button border-radius large button-white boutonretour "><span> < Retour</span></a>
+    <div class="formac">
+        <div class="contact-form ptb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-title text-center">
+                            <h2>Compteur de calories brulées</h2>
+                            <p>Connaître le nombre de calories consommées c’est bien, mais connaître le nombre de calories
+                                dépensées c’est motivant ! Après une bonne séance d’abdos de 30 minutes, notre principal
+                                souci est de savoir combien de calories nous venons de brûler, n’est-ce pas ?
+                                Pour le savoir, VisonsBien-etre vous offre son compteur de calories dépensées
+                                après le sport ! Il vous suffit pour cela d’indiquer l’activité physique que vous
+                                venez de pratiquer, la durée ainsi que votre poids, et vous obtiendrez en un clic le
+                                nombre de calories que vous avez brûlées !</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="contact-form" style="text-align: center;position:relative;left: 170% ;">
+                            <div class="error-content" style="text-align: center;position:relative;left: 0%;" >
+                                <h2 class="resultat" style="font-size: 40px;" id="resultat_calories">0</h2>
+                                <h4>Kcal</h4>
+                            </div>
+                            <form id="contact-form" method="post" name="form_activity">
+                                <input id="minutes" name="form_activity[minutes]" type="text" placeholder="Durée(min)">
+                                <input id="poids_calories" name="form_activity[poids]" type="text" placeholder="Poids(Kg)">
+                                <div class="col-md-5 col-sm-6 col-xs-12">
+                                    <div class="filter-form">
+                                        <select id="activity">
+                                            <option selected="selected" value="">Choisir une activité</option>
+                                            {% for ac in activities %}
+                                                <option value="{{ ac.met }}">{{ ac.nom }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <button id="calculer_calories"type="button">Calculer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="formimc">
+        <div class="contact-form ptb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-title text-center">
+                            <h2>Calculez votre IMC</h2>
+                            <h3>(Indice de Masse Corporelle)</h3>
+                            <p>Si vous avez déjà effectué des régimes ou côtoyé des nutritionnistes,
+                                vous avez forcément entendu parler de l’IMC… Mais qu’est-ce que c’est au juste ?
+                                C’est l’Indice de Masse Corporelle. Mais encore ? Cet indice, plus efficace qu’un
+                                miroir ou qu’une balance, permet de connaître votre corpulence en tenant compte de
+                                votre poids et de votre taille. En effet, peser 65 kilos en mesurant 1,50 m ou 1,85m,
+                                ce n’est pas la même chose !
+                                À quoi ça sert ? Le résultat de l’IMC permettra de savoir,
+                                en fonction de votre taille, si vous êtes trop maigre, normale, en surpoids ou obèse, et ainsi
+                                de déceler d’éventuels risques pour votre santé.
+                                Pour connaître et interpréter votre IMC, calculez-le en moins de deux grâce à cet outil !</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="contact-form" style="text-align: center;position:relative;left: 170%;">
+                            <div class="error-content" style="text-align: center;position:relative;left: 0%;">
+                                <h2 id="resultat_imc" class="resultat" style="font-size: 40px;">0</h2>
+                            </div>
+                            <form id="contact-form" method="post" name="form_imc">
+                                <input id="poids_imc" name="form_imc[poids]" type="text" placeholder="Poids(Kg)">
+                                <input id="taille_imc" name="form_imc[taille]" type="text" placeholder="Taille(Cm)">
+                                <button id="calculer_imc" type="button">Calculer</button>
+                            </form>
+                            <h5 id="interp_imc"class="mt-30"></h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="formpoids">
+        <div class="contact-form ptb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-title text-center">
+                            <h2>Calculez votre poids idéal</h2>
+                            <p>Le poids idéal… Tout un programme ! On passe notre temps à courir après
+                                mais sait-on réellement ce qu’il signifie au juste ? Le poids idéal, c’est
+                                celui avec lequel vous vous sentez bien. Chacune a le sien en fonction de
+                                sa taille, de son sexe et de son âge, de sa morphologie… Rien ne sert donc
+                                de comparer son poids idéal à celui de ses voisines ! Avant de partir à la
+                                guerre contre les kilos, calculez-le d’abord en un clic grâce à notre outil
+                                simplifié, inspiré de la formule de Lorentz.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="contact-form" style="text-align: center;position:relative;left: 170%;">
+                            <div class="error-content" style="text-align: center;position:relative;left: 0%;">
+                                <h2 id="resultat_pi" class="resultat" style="font-size: 40px;">0</h2>
+                            </div>
+                            <form id="contact-form" method="post" name="form_imc">
+                                <div class="filter-form">
+                                    <select id="sexe">
+                                        <option selected="selected" value="">Votre séxe</option>
+                                            <option value="Homme">Homme</option>
+                                            <option value="Femme">Femme</option>
+                                    </select>
+                                </div>
+                                <input id="taille_pi" name="form_pi[taille]" type="text" placeholder="Taille(Cm)">
+                                <button id="calculer_pi" type="button">Calculer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="table_des_aliments">
+            <div class="elements ptb-100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2">
+                            <div class="section-title text-center">
+                                <h2>Table des calories</h2>
+                                <h3>A chaque aliment, son nombre de calories ! !!!</h3>
+                                <p>Avouons-le, nous aimons jeter un œil au nombre de calories de l’aliment
+                                    qu’on vient de manger ou qu’on hésite à acheter… Simple curiosité ou
+                                    masochisme féminin ? Quoi qu’il en soit, pour épancher votre soif de
+                                    connaissance calorique, Fourchette & Bikini vous offre sa table des
+                                    calories complète ! En quoi cela consiste ? C’est simple, il vous suffit de
+                                    rechercher l’aliment de votre choix pour en connaître la valeur calorique ! Vous
+                                    avez toujours rêvé de savoir si 100 g de thon était équivalent à 100 g de crabe en
+                                    calories ? (c’est un exemple…) Ou si il valait mieux craquer sur un croissant que sur
+                                    un beignet ? Vous aurez enfin toutes les réponses à vos questions en un clic grâce à
+                                    la table des calories !</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table id="datatable-buttons" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th><b>Aliments</b>
+                                        </th>
+                                        <th><b>pour 100 g</b></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>Abricot</td>
+                                        <td>43 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ananas</td>
+                                        <td>55 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Banane</td>
+                                        <td>88 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Canneberges</td>
+                                        <td>46 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cerises</td>
+                                        <td>50 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Citron</td>
+                                        <td>35 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Coing</td>
+                                        <td>38 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cynorrhodon</td>
+                                        <td>162 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Figue</td>
+                                        <td>107 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fraises</td>
+                                        <td>32 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Framboises</td>
+                                        <td>36 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fruit de la passion</td>
+                                        <td>97 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gingembre</td>
+                                        <td>80 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Grenade</td>
+                                        <td>74 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kiwi</td>
+                                        <td>51 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Litchi</td>
+                                        <td>66 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mandarine</td>
+                                        <td>50 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mangue</td>
+                                        <td>62 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Melon jaune</td>
+                                        <td>54 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mûres</td>
+                                        <td>43 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Myrtilles</td>
+                                        <td>35 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Orange sanguine</td>
+                                        <td>45 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pamplemousse</td>
+                                        <td>50 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pastèque</td>
+                                        <td>30 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pêche</td>
+                                        <td>41 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Poire</td>
+                                        <td>55 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pomme</td>
+                                        <td>52 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Prune</td>
+                                        <td>47 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Raisins</td>
+                                        <td>70 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rhubarbe</td>
+                                        <td>21 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Artichaut</td>
+                                        <td>47 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Asperge</td>
+                                        <td>18 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Aubergine</td>
+                                        <td>24 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Avocat</td>
+                                        <td>160 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Betterave</td>
+                                        <td>43 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Blettes</td>
+                                        <td>19 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Brocoli</td>
+                                        <td>35 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Carotte</td>
+                                        <td>36 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Champignons</td>
+                                        <td>22 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chou chinois</td>
+                                        <td>13 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chou-fleur</td>
+                                        <td>25 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chou frisé</td>
+                                        <td>49 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chou-rave</td>
+                                        <td>27 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chou rouge</td>
+                                        <td>29 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Choux de Bruxelles</td>
+                                        <td>43 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Concombre</td>
+                                        <td>15 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Courgette</td>
+                                        <td>20 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cresson</td>
+                                        <td>19 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Épinards</td>
+                                        <td>23 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fenouil</td>
+                                        <td>31 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Haricots verts</td>
+                                        <td>25 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maïs</td>
+                                        <td>108 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Oignon</td>
+                                        <td>40 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patates douces</td>
+                                        <td>76 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Petits pois</td>
+                                        <td>82 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Piment</td>
+                                        <td>40 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Poireau</td>
+                                        <td>31 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Poivron</td>
+                                        <td>21 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pomme de terre</td>
+                                        <td>86 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Potiron</td>
+                                        <td>19 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Radis</td>
+                                        <td>16 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Roquette</td>
+                                        <td>25 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Salade iceberg</td>
+                                        <td>14 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Agneau (gigot)</td>
+                                        <td>216 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bacon</td>
+                                        <td>385 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Blanc de poulet</td>
+                                        <td>100 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Chipolata</td>
+                                        <td>340 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Entrecôte</td>
+                                        <td>166 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Escalope de veau</td>
+                                        <td>166 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Filet de bœuf</td>
+                                        <td>188 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Filet mignon</td>
+                                        <td>157 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jambon cru</td>
+                                        <td>192 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jambon cuit</td>
+                                        <td>290 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Merguez</td>
+                                        <td>279 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Steak haché</td>
+                                        <td>210 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bar</td>
+                                        <td>105 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Colin</td>
+                                        <td>91 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dorade</td>
+                                        <td>91 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hareng</td>
+                                        <td>122 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Maquereau</td>
+                                        <td>201 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Poulpe</td>
+                                        <td>61 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sardine</td>
+                                        <td>162 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saumon</td>
+                                        <td>208 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sole</td>
+                                        <td>75 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Thon</td>
+                                        <td>144 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Truite</td>
+                                        <td>122 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Crème fleurette</td>
+                                        <td>215 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Crème fraîche</td>
+                                        <td>292 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Emmental</td>
+                                        <td>382 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Faisselle</td>
+                                        <td>89 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fromage blanc 0 %</td>
+                                        <td>67 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fromage de chèvre</td>
+                                        <td>207 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Gruyère</td>
+                                        <td>392 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lait</td>
+                                        <td>47 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Lait de coco</td>
+                                        <td>136 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mozzarella</td>
+                                        <td>330 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Œuf</td>
+                                        <td>145 kcal</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Yaourt nature</td>
+                                        <td>62 kcal</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{{asset('admin/js/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/dataTables.bootstrap.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/dataTables.buttons.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/jszip.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/pdfmake.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/vfs_fonts.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/buttons.html5.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/buttons.print.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/dataTables.fixedHeader.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/dataTables.keyTable.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/dataTables.responsive.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/responsive.bootstrap.min.js') }}"></script>
+    <script src="{{asset('admin/js/datatables/dataTables.scroller.min.js') }}"></script>
+
+
+    <script src="{{ asset('js/waypoints.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
+
+    <script>
+        var handleDataTableButtons = function() {
+                "use strict";
+                0 !== $("#datatable-buttons").length && $("#datatable-buttons").DataTable({
+                    dom: "Bfrtip",
+                    buttons: [{
+                        extend: "copy",
+                        className: "btn-sm"
+                    }, {
+                        extend: "csv",
+                        className: "btn-sm"
+                    }, {
+                        extend: "excel",
+                        className: "btn-sm"
+                    }, {
+                        extend: "pdf",
+                        className: "btn-sm"
+                    }, {
+                        extend: "print",
+                        className: "btn-sm"
+                    }],
+                    responsive: !0
+                })
+            },
+            TableManageButtons = function() {
+                "use strict";
+                return {
+                    init: function() {
+                        handleDataTableButtons()
+                    }
+                }
+            }();
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#datatable').dataTable();
+            $('#datatable-keytable').DataTable({
+                keys: true
+            });
+            $('#datatable-responsive').DataTable();
+            $('#datatable-scroller').DataTable({
+                ajax: "js/datatables/json/scroller-demo.json",
+                deferRender: true,
+                scrollY: 380,
+                scrollCollapse: true,
+                scroller: true
+            });
+            var table = $('#datatable-fixed-header').DataTable({
+                fixedHeader: true
+            });
+        });
+        TableManageButtons.init();
+    </script>
+    <script>
+    $(document).ready(function() {
+        $('.table_des_aliments').hide();
+        $('.formpoids').hide();
+        $('.boutonretour').hide();
+        $('.formimc').hide();
+        $('.formac').hide();
+        $('.poidsidealbtn').click(function(event) {
+            $('.boutonretour').fadeIn("3000");
+            $('.menuforms').fadeOut("3000");
+            $('.formpoids').fadeIn("2000");
+            $('.formimc').hide();
+            $('.formac').hide();
+            $('.boutonretour').click(function(event) {
+                $('.menuforms').fadeIn("3000");
+            });
+        });
+        $('.imcbtn').click(function(event) {
+            $('.boutonretour').fadeIn("3000");
+            $('.menuforms').fadeOut("3000");
+            $('.formimc').fadeIn("2000");
+            $('.formpoids').hide();
+            $('.formac').hide();
+            $('.boutonretour').click(function(event) {
+                $('.menuforms').fadeIn("3000");
+            });
+        });
+        $('.caloriesbtn').click(function(event) {
+            $('.boutonretour').fadeIn("3000");
+            $('.menuforms').fadeOut("3000");
+            $('.formac').fadeIn("2000");
+            $('.formimc').hide();
+            $('.formpoids').hide();
+            $('.boutonretour').click(function(event) {
+                $('.menuforms').fadeIn("3000");
+            });
+        });
+        $('.tablecaloriesbtn').click(function(event) {
+            $('.boutonretour').fadeIn("3000");
+            $('.menuforms').fadeOut("3000");
+            $('.formpoids').hide();
+            $('.formac').hide();
+            $('.table_des_aliments').fadeIn("2000");
+            $('.boutonretour').click(function(event) {
+                $('.menuforms').fadeIn("3000");
+            });
+        });
+
+
+    });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $("#calculer_calories").click(function(event) {
+                event.preventDefault();
+                var minutes=$("#minutes").val();
+                var poids_calories=$("#poids_calories").val();
+                var activity=$("#activity").val();
+                if(activity!=""){
+
+                    var url='/PIDEV-one-to-many/web/app_dev.php/CalculCalories/'+minutes+'/'+activity+'/'+poids_calories;
+                    alert(url);
+                    $.post(url,  function(data, textStatus, xhr) {
+                        $("#resultat_calories").empty().text(data.calories);
+                    });
+                }
+            });
+            $("#calculer_imc").click(function(event) {
+                event.preventDefault();
+                var taille_imc=$("#taille_imc").val();
+                var poids_imc=$("#poids_imc").val();
+                    var url='/PIDEV-one-to-many/web/app_dev.php/CalculIMC/'+taille_imc+'/'+poids_imc;
+                    alert(url);
+                    $.post(url,  function(data, textStatus, xhr) {
+                        $("#resultat_imc").empty().text(data.imc);
+                        if (data.imc < 16.5)
+                            $("#interp_imc").empty().text("Vous souffrez de dénutrition").css('color','red');
+                        else if ((data.imc >16.5)&&(data.imc < 18.5))
+                            $("#interp_imc").empty().text("Vous étes trop maigre");
+                        else if ((data.imc >18.5)&&(data.imc < 25))
+                            $("#interp_imc").empty().text("Vous avez une corpulence normale").css('color','#6bc513');
+                        else if ((data.imc >25)&&(data.imc < 30))
+                            $("#interp_imc").empty().text("Vous etes en surpoids");
+                        else if ((data.imc >30)&&(data.imc < 35))
+                            $("#interp_imc").empty().text("Vous souffrez d'obésité modérée");
+                        else if ((data.imc >35)&&(data.imc < 40))
+                            $("#interp_imc").empty().text("Vous avez une corpulence sévère");
+                        else
+                            $("#interp_imc").empty().text("Vous souufrez d'obésité morbide").css('color','red');
+
+
+                    });
+            });
+            $("#calculer_pi").click(function(event) {
+                event.preventDefault();
+                var taille=$("#taille_pi").val();
+                var sexe=$("#sexe").val();
+                if(sexe!=""){
+
+                    var url='/PIDEV-one-to-many/web/app_dev.php/CalculPI/'+taille+'/'+sexe;
+                    alert(url);
+                    $.post(url,  function(data, textStatus, xhr) {
+                        $("#resultat_pi").empty().text(data.poids_ideal);
+                    });
+                }
+            });
+
+
+
+        });
+    </script>
+{% endblock %}
+
+
+

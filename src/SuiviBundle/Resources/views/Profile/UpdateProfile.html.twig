@@ -1,0 +1,194 @@
+{% extends 'profilenutri.html.twig' %}
+
+{% block contenu %}
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Form Elements</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search for...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Form Design <small>different form elements</small></h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Settings 1</a>
+                                    </li>
+                                    <li><a href="#">Settings 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        {{ form_start(form ,{'method': 'post', 'attr': {'class':'form-horizontal form-label-left'} }) }}
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12" for="first-name">E-mail <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                {{ form_widget(form.email, {'attr':{'class':'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12">Adresse <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                {{ form_widget(form.address, {'attr':{'class':'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12" for="first-name">Telephone<span class="required">*</span>
+                            </label>
+                            <div class="col-md-2 col-sm-6 col-xs-12">
+                                {{ form_widget(form.telephone, {'attr':{'class':'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>
+
+                        <!--<div class="form-group">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12">Pays <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                {{ form_widget(form.pays, {'attr':{'class':'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12">Region <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                {{ form_widget(form.region, {'attr':{'class':'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12">Ville <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                {{ form_widget(form.ville, {'attr':{'class':'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="control-label col-md-1 col-sm-3 col-xs-12">Bio <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                {{ form_widget(form.cv, {'attr':{'class':'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                {{ form_widget(form.Modifier, {'attr':{'class':'btn btn-success'} }) }}
+                            </div>
+                        </div>
+                        {{ form_end(form) }}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{{ asset('js/select2-master/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('admin/js/cropping/cropper.min.js') }}"></script>
+    <script src="{{ asset('admin/js/cropping/main.js') }}"></script>
+    <script>
+    $(document).ready(function(){
+        $('.region,.ville,.pays').select2();
+        $(".region,.ville").prop("disabled", true);
+        $(".fos_user_registration_register").hide();
+        var $pays=$(".pays");
+        const BATTUTA_KEY="149f419ffa589fb845481a824ee5ce55";
+        var url_pays="{{asset('js/countries.json')}}";
+        $(".pays option").remove();
+        $.getJSON(url_pays, function(json, textStatus) {
+            /*optional stuff to do after success */
+            $.each(json, function (i, item) {
+
+                $pays.append('<option data-code="'+item.code+'" value="'+item.name+'">'+item.name+'</option>');
+            });
+        });
+        $pays.change(function(event) {
+            /* Act on the event */
+            var countryCode=$(this).find(":selected").data("code");
+            //alert(countryCode);
+
+            // Populate country select box from battuta API
+            url="https://battuta.medunes.net/api/region/"
+                +countryCode
+                +"/all/?key="+BATTUTA_KEY+"&callback=?";
+
+            $.getJSON(url,function(regions)
+            {
+                $(".form_region option,.ville option").remove();
+                //loop through regions..
+                $.each(regions,function(key,region)
+                {
+                    $(".region").append("<option value='"+region.region+"'>"+region.region+"</option>");
+                });
+                $(".form_region").fadeIn(1000);
+                $(".form_region").prop("disabled", false);
+            });
+
+        });
+        $(".region").on("change",function()
+        {
+
+            // Populate country select box from battuta API
+            var countryCode=$pays.find(":selected").data("code");
+            //alert(countryCode);
+            region=$(".region").val();
+            url="https://battuta.medunes.net/api/city/"
+                +countryCode
+                +"/search/?region="
+                +region
+                +"&key="
+                +BATTUTA_KEY
+                +"&callback=?";
+
+            $.getJSON(url,function(villes)
+            {
+                /*currentCities=cities;
+                var i=0;*/
+                $(".ville option").remove();
+
+                //loop through regions..
+                $.each(villes,function(key,ville)
+                {
+                    $("<option></option>")
+                        .attr("value",ville.city)
+                        .append(ville.city)
+                        .appendTo($(".ville"));
+                });
+                $(".ville").prop("disabled", false);
+                $(".ville").fadeIn(1000);
+                // trigger "change" to fire the #state section update process
+
+
+            });
+        });
+    })
+        </script>
+{% endblock %}
+

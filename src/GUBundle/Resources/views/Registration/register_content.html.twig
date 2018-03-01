@@ -1,0 +1,280 @@
+{% extends '::base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block css %}<style>
+    #contact-form > input {
+        background: #6bc513 none repeat scroll 0 0;
+        border: medium none;
+        color: #fff;
+        font-family: "Lato",sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        height: 45px;
+        margin-top: 40px;
+        text-transform: uppercase;
+        -webkit-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+        width: 100%;
+    }
+    #contact-form > button:hover {
+        background: #555 none repeat scroll 0 0;
+    }
+</style>
+<link rel="stylesheet" href="{{ asset('js/select2-master/dist/css/select2.min.css') }}">
+{% endblock css %}
+{% block contenu %}
+    {% block fos_user_content %}
+                <div>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </div>
+
+        {% if app.request.hasPreviousSession %}
+            {% for type, messages in app.session.flashbag.all() %}
+                {% for message in messages %}
+                    <div class="flash-{{ type }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+
+    <div class="wrapper white-bg" >
+        <button type="button" id="returnToChoice">Retour vers les choix</button>
+    <div class="elements pricing-plan ptb-100">
+        <div class="container">
+            <div class="row" id="choice">
+                <div class="col-md-3 col-sm-4 col-xs-9">
+                    <div class="pricing-table text-center">
+                        <div class="pricing-title">
+                            <h3>Client</h3>
+                        </div>
+                        <div class="pricing-desc">
+                            <h2><span class="currency">$</span>0<span class="date">/free</span></h2>
+                            <ul>
+                                <li>Nail cutting & styling</li>
+                                <li>Hot Ayurvedic spa</li>
+                                <li>Hot oil massage</li>
+                                <li>Body wraps</li>
+                            </ul>
+                            <div class="book-now">
+                                <a class="inscri" data-role="ROLE_CLIENT" href="#">S'inscrire</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-9">
+                    <div class="pricing-table text-center">
+                        <div class="pricing-title">
+                            <h3>Vendeur</h3>
+                        </div>
+                        <div class="pricing-desc">
+                            <h2><span class="currency">%</span>5<span class="date">/produit vendu</span></h2>
+                            <ul>
+                                <li>Nail cutting & styling</li>
+                                <li>Hot Ayurvedic spa</li>
+                                <li>Hot oil massage</li>
+                                <li>Body wraps</li>
+                            </ul>
+                            <div class="book-now">
+                                <a class="inscri" data-role="ROLE_VENDOR" href="#">S'inscrire</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-4 col-xs-9">
+                    <div class="pricing-table text-center">
+                        <div class="pricing-title">
+                            <h3>Nutritionniste</h3>
+                        </div>
+                        <div class="pricing-desc">
+                            <h2><span class="currency">$</span>0<span class="date">/free</span></h2>
+                            <ul>
+                                <li>Nail cutting & styling</li>
+                                <li>Hot Ayurvedic spa</li>
+                                <li>Hot oil massage</li>
+                                <li>Body wraps</li>
+                            </ul>
+                            <div class="book-now">
+                                <a class="inscri" data-role="ROLE_NUTRI" href="#">S'inscrire</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 hidden-sm col-xs-9">
+                    <div class="pricing-table text-center">
+                        <div class="pricing-title">
+                            <h3>Etablissement</h3>
+                        </div>
+                        <div class="pricing-desc">
+                            <h2><span class="currency">$</span>50<span class="date">/month</span></h2>
+                            <ul>
+                                <li>Nail cutting & styling</li>
+                                <li>Hot Ayurvedic spa</li>
+                                <li>Hot oil massage</li>
+                                <li>Body wraps</li>
+                            </ul>
+                            <div class="book-now">
+                                <a class="inscri" data-role="ROLE_ETAB" href="#">S'inscrire</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="form">
+            
+        
+        <div>
+        {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+        <div class="contact-form ptb-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="section-title text-center">
+                            <h2>Get in touch</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim nostrud exercitation ullamco laboris nisi.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="contact-form">
+                            <p class="form-messege"></p>
+                            {{ form_widget(form) }}
+                            <input type="submit" value="{{ 'registration.submit'|trans }} " >
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <p class="form-messege"></p>
+                    <input type="submit" value="{{ 'registration.submit'|trans }} " >
+                </div>
+
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+        </div>
+    {% endblock fos_user_content %}
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('js/vendor/jquery-1.12.0.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.nivo.slider.pack.js') }}"></script>
+    <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
+    <script src="{{ asset('js/ajax-mail.js') }}"></script>
+    <script src="{{ asset('js/jquery.magnific-popup.js') }}"></script>
+    <script src="{{ asset('js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('js/plugins.js') }}"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+        <script src="{{ asset('js/select2-master/dist/js/select2.min.js') }}"></script>
+    <script >
+    $(document).ready(function(){
+        $('.region,.ville,.pays').select2();
+        $(".region,.ville").prop("disabled", true);
+        $(".fos_user_registration_register").hide();
+        var $pays=$(".pays");
+        const BATTUTA_KEY="149f419ffa589fb845481a824ee5ce55";
+        var url_pays="{{asset('js/countries.json')}}";
+        $(".pays option").remove();
+        $.getJSON(url_pays, function(json, textStatus) {
+                /*optional stuff to do after success */
+                $.each(json, function (i, item) {
+
+                    $pays.append('<option data-code="'+item.code+'" value="'+item.name+'">'+item.name+'</option>');
+                });
+        });
+        $pays.change(function(event) {
+            /* Act on the event */
+            var countryCode=$(this).find(":selected").data("code");
+            //alert(countryCode);
+        
+        // Populate country select box from battuta API
+        url="https://battuta.medunes.net/api/region/"
+        +countryCode
+        +"/all/?key="+BATTUTA_KEY+"&callback=?";
+
+        $.getJSON(url,function(regions)
+        {
+            $(".region option,.ville option").remove();
+            //loop through regions..
+            $.each(regions,function(key,region)
+            {
+                $(".region").append("<option value='"+region.region+"'>"+region.region+"</option>");
+            });
+            $(".region").fadeIn(1000);
+             $(".region").prop("disabled", false);
+        });
+
+    });
+        $(".region").on("change",function()
+    {
+        
+        // Populate country select box from battuta API
+        var countryCode=$pays.find(":selected").data("code");
+        //alert(countryCode);
+        region=$(".region").val();
+        url="https://battuta.medunes.net/api/city/"
+        +countryCode
+        +"/search/?region="
+        +region
+        +"&key="
+        +BATTUTA_KEY
+        +"&callback=?";
+        
+        $.getJSON(url,function(villes)
+        {
+            /*currentCities=cities;
+            var i=0;*/
+            $(".ville option").remove();
+        
+            //loop through regions..
+            $.each(villes,function(key,ville)
+            {
+                $("<option></option>")
+                                .attr("value",ville.city)
+                                .append(ville.city)
+                        .appendTo($(".ville"));
+            });
+             $(".ville").prop("disabled", false);
+            $(".ville").fadeIn(1000);
+            // trigger "change" to fire the #state section update process
+            
+            
+        });
+        }); 
+
+        
+        //document.getElementById("fos_user_registration_form_fax").required="false";
+        $(".vendeur,.hiddenRole").hide();
+        $("#returnToChoice").hide();
+        $(".inscri").click(function(event) {
+            $("#returnToChoice").fadeIn("3000");
+            var type=($(this).data("role"));
+            //alert(type);
+            $("#choice").fadeOut("1000");
+            $(".fos_user_registration_register").fadeIn('1000');
+            if(type=="ROLE_VENDOR"){
+                $(".vendeur").show();
+                //document.getElementById("fos_user_registration_form_fax").required="true";
+            }
+            var $select=$(".hiddenRole");
+            $select.val(type);
+
+        });
+        $("#returnToChoice").click(function(event) {
+            
+            $("#returnToChoice").hide();
+            $(".fos_user_registration_register").fadeOut('1000');
+            $("#choice").fadeIn("1000");
+        });
+    })
+</script>
+{% endblock js %}

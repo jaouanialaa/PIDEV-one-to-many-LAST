@@ -1,0 +1,21 @@
+gu_homepage:
+    path:     /
+    defaults: { _controller: GUBundle:Default:index }
+gu_inscri:
+    path:     /inscri
+    defaults: { _controller: GUBundle:Default:register }
+gu_register_choice:
+    path:     /inscriChoice
+    defaults: { _controller: GUBundle:Default:registerChoice }
+gu_admin_index:
+    path:     /admin/index
+    defaults: { _controller: GUBundle:Admin:index }
+gu_admin_readAllUsers:
+    path:     /admin/readAllUsers
+    defaults: { _controller: GUBundle:Admin:readAllUsers }
+gu_admin_readUserByRole:
+    path:     /admin/readAllUsers/{role}
+    defaults: { _controller: GUBundle:Admin:readUserByRole }
+gu_admin_readAUser:
+    path:     /admin/readUser/{username}
+    defaults: { _controller: GUBundle:Admin:readUser }

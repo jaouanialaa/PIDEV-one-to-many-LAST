@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block contenu %}
+    <div class="error-area text-center ptb-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="error-content ">
+                        <h2>Oups !!</h2>
+                        <h3>Vous suivez déja un régime !</h3>
+                        <h4>Vous devez mettre fin à votre régime courant pour suivre un nouveau régime</h4>
+                        <a class="go-home" href="{{ path('client_readRegimes') }}">Go to home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
+

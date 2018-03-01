@@ -1,0 +1,54 @@
+suivi_homepage:
+    path:     /ProfileNutri
+    defaults: { _controller: SuiviBundle:Regime:index }
+profile_readAllregime:
+    path:     /ProfileNutri/readAllregime
+    defaults: { _controller: SuiviBundle:Regime:readAllRegime }
+profile_update:
+    path:     /ProfileNutri/updateProfile/{username}
+    defaults: { _controller: SuiviBundle:Regime:updateProfile }
+profilephoto_update:
+    path:     /ProfileNutri/updateProfilephoto/{username}
+    defaults: { _controller: SuiviBundle:Regime:updateProfile }
+profile_Addregime:
+    path:     /ProfileNutri/Addregime
+    defaults: { _controller: SuiviBundle:Regime:createRegime }
+profile_readRegime:
+    path:     /ProfileNutri/readRegime{id}
+    defaults: { _controller: SuiviBundle:Regime:readRegime }
+profile_updateRegime:
+    path:     /ProfileNutri/updateRegime{id}
+    defaults: { _controller: SuiviBundle:Regime:updateRegime }
+profile_deleteRegime:
+    path:     /ProfileNutri/deleteRegime{id}
+    defaults: { _controller: SuiviBundle:Regime:deleteRegime }
+client_readRegimes:
+    path:     /Regimes
+    defaults: { _controller: SuiviBundle:Regime:readFrontAllRegime }
+client_readRegime:
+    path:     /Regimes/{id}
+    defaults: { _controller: SuiviBundle:Regime:readRegimeFO }
+client_like:
+    path:     /Regimes/like/{id}
+    defaults: { _controller: SuiviBundle:Regime:like }
+client_suiviRegime:
+    path:     /Suivi{id}
+    defaults: { _controller: SuiviBundle:Suivi:affecterRegime }
+client_abbondonnerRegime:
+    path:     /Suivi/abondonner{id}
+    defaults: { _controller: SuiviBundle:Suivi:abondonnerRegime }
+client_suiviRegimeUcant:
+    path:     /SuiviFailed
+    defaults: { _controller: SuiviBundle:Suivi:affecterRegime }
+client_calculCalories:
+    path:     /CalculCalories/{minutes}/{met}/{poids}
+    defaults: { _controller: SuiviBundle:Suivi:calculerCalories }
+    methods:  [POST,GET]
+client_calculIMC:
+    path:     /CalculIMC/{taille}/{poids}
+    defaults: { _controller: SuiviBundle:Suivi:calculerIMC }
+    methods:  [POST,GET]
+client_calculPoisIdeal:
+    path:     /CalculPI/{taille}/{sexe}
+    defaults: { _controller: SuiviBundle:Suivi:calculerPoidIdeal }
+    methods:  [POST,GET]

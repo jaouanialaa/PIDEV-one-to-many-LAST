@@ -1,0 +1,58 @@
+<?php
+
+namespace SuiviBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use GUBundle\Entity\Utilisateur;
+
+/**
+ * UserRegime
+ *
+ * @ORM\Table(name="user_regime")
+ * @ORM\Entity(repositoryClass="SuiviBundle\Repository\UserRegimeRepository")
+ */
+class UserRegime extends Utilisateur
+{
+    /**
+     * @ORM\ManyToOne(targetEntity="SuiviBundle\Entity\Regime")
+     *
+     * @ORM\JoinColumn(name="idRegime",referencedColumnName="id")
+     */
+
+    private $regime;
+
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set regime.
+     *
+     * @param string $regime
+     *
+     * @return UserRegime
+     */
+    public function setRegime($regime)
+    {
+        $this->regime = $regime;
+
+        return $this;
+    }
+
+    /**
+     * Get regime.
+     *
+     * @return string
+     */
+    public function getRegime()
+    {
+        return $this->regime;
+    }
+}
